@@ -9,7 +9,7 @@ import com.anbang.qipai.chayuanshuangkou.cqrs.q.dbo.WenzhouShuangkouPanPlayerRes
 
 public class PanResultVO {
 
-	private List<WenzhouShuangkouPanPlayerResultVO> playerResultList;
+	private List<ChayuanShuangkouPanPlayerResultVO> playerResultList;
 
 	private boolean chaodi;
 
@@ -30,7 +30,7 @@ public class PanResultVO {
 		playerResultList = new ArrayList<>();
 		if (list != null) {
 			list.forEach((panPlayerResult) -> {
-				playerResultList.add(new WenzhouShuangkouPanPlayerResultVO(
+				playerResultList.add(new ChayuanShuangkouPanPlayerResultVO(
 						pukeGameDbo.findPlayer(panPlayerResult.getPlayerId()), panPlayerResult));
 			});
 		}
@@ -41,11 +41,11 @@ public class PanResultVO {
 		gameInfoVO = new GameInfoVO(panResultDbo.getPukeGameInfoDbo());
 	}
 
-	public List<WenzhouShuangkouPanPlayerResultVO> getPlayerResultList() {
+	public List<ChayuanShuangkouPanPlayerResultVO> getPlayerResultList() {
 		return playerResultList;
 	}
 
-	public void setPlayerResultList(List<WenzhouShuangkouPanPlayerResultVO> playerResultList) {
+	public void setPlayerResultList(List<ChayuanShuangkouPanPlayerResultVO> playerResultList) {
 		this.playerResultList = playerResultList;
 	}
 

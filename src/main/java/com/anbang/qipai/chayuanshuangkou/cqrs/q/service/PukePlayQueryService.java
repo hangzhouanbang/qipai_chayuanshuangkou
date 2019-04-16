@@ -11,10 +11,10 @@ import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.GameInfoPlayerViewFilter;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.PanActionFramePlayerViewFilter;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.PukeGameValueObject;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChaodiResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouPanResult;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.PukeActionResult;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ReadyForGameResult;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ReadyToNextPanResult;
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouPanResult;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.state.StartChaodi;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.state.VoteNotPassWhenChaodi;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.state.VotingWhenChaodi;
@@ -161,9 +161,9 @@ public class PukePlayQueryService {
 		gameLatestPukeGameInfoDboDao.save(gameId, pukeGameInfoDbo);
 		pukeGameInfoDboDao.save(pukeGameInfoDbo);
 		// 盘出结果的话要记录结果
-		WenzhouShuangkouPanResult wenzhouShuangkouPanResult = pukeActionResult.getPanResult();
-		if (wenzhouShuangkouPanResult != null) {
-			PanResultDbo panResultDbo = new PanResultDbo(gameId, wenzhouShuangkouPanResult);
+		ChayuanShuangkouPanResult chayuanShuangkouPanResult = pukeActionResult.getPanResult();
+		if (chayuanShuangkouPanResult != null) {
+			PanResultDbo panResultDbo = new PanResultDbo(gameId, chayuanShuangkouPanResult);
 			panResultDbo.setPanActionFrame(panActionFrame);
 			panResultDbo.setPukeGameInfoDbo(pukeGameInfoDbo);
 			panResultDboDao.save(panResultDbo);
@@ -200,9 +200,9 @@ public class PukePlayQueryService {
 			pukeGameInfoDboDao.save(pukeGameInfoDbo);
 		}
 		// 盘出结果的话要记录结果
-		WenzhouShuangkouPanResult wenzhouShuangkouPanResult = chaodiResult.getPanResult();
-		if (wenzhouShuangkouPanResult != null) {
-			PanResultDbo panResultDbo = new PanResultDbo(gameId, wenzhouShuangkouPanResult);
+		ChayuanShuangkouPanResult chayuanShuangkouPanResult = chaodiResult.getPanResult();
+		if (chayuanShuangkouPanResult != null) {
+			PanResultDbo panResultDbo = new PanResultDbo(gameId, chayuanShuangkouPanResult);
 			panResultDbo.setPanActionFrame(panActionFrame);
 			panResultDboDao.save(panResultDbo);
 			if (chaodiResult.getJuResult() != null) {// 一切都结束了

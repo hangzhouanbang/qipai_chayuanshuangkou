@@ -2,14 +2,12 @@ package com.anbang.qipai.chayuanshuangkou.cqrs.c.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.listener.XianshuCountDaActionStatisticsListener;
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouPanPlayerResult;
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouPanResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouPanPlayerResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouPanResult;
 import com.dml.shuangkou.ju.Ju;
 import com.dml.shuangkou.pan.CurrentPanResultBuilder;
 import com.dml.shuangkou.pan.Pan;
@@ -30,22 +28,22 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 	@Override
 	public PanResult buildCurrentPanResult(Ju ju, long panFinishTime) {
 		Pan currentPan = ju.getCurrentPan();
-		WenzhouShuangkouPanResult latestFinishedPanResult = (WenzhouShuangkouPanResult) ju
+		ChayuanShuangkouPanResult latestFinishedPanResult = (ChayuanShuangkouPanResult) ju
 				.findLatestFinishedPanResult();
 		Map<String, Integer> playerTotalScoreMap = new HashMap<>();
 		if (latestFinishedPanResult != null) {
-			for (WenzhouShuangkouPanPlayerResult panPlayerResult : latestFinishedPanResult.getPanPlayerResultList()) {
+			for (ChayuanShuangkouPanPlayerResult panPlayerResult : latestFinishedPanResult.getPanPlayerResultList()) {
 				playerTotalScoreMap.put(panPlayerResult.getPlayerId(), panPlayerResult.getTotalScore());
 			}
 		}
 		List<String> playerIds = currentPan.findAllPlayerId();
-		XianshuCountDaActionStatisticsListener wenzhouShuangkouListener = ju.getActionStatisticsListenerManager()
+		XianshuCountDaActionStatisticsListener chayuanShuangkouListener = ju.getActionStatisticsListenerManager()
 				.findDaListener(XianshuCountDaActionStatisticsListener.class);
-		Map<String, int[]> playerXianshuMap = wenzhouShuangkouListener.getPlayerXianshuMap();
+		Map<String, int[]> playerXianshuMap = chayuanShuangkouListener.getPlayerXianshuMap();
 
 		List<String> noPaiPlayerIdList = currentPan.getNoPaiPlayerIdList();
 		if (renshu > 2) {// 4人游戏
-			List<WenzhouShuangkouPanPlayerResult> panPlayerResultList = new ArrayList<>();
+			List<ChayuanShuangkouPanPlayerResult> panPlayerResultList = new ArrayList<>();
 			String yingPlayerId = noPaiPlayerIdList.get(0);
 			ShuangkouPlayer duijiaPlayer = currentPan.findDuijiaPlayer(yingPlayerId);
 			String playerId1 = noPaiPlayerIdList.get(1);
@@ -67,7 +65,7 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			}
 			ChayuanShuangkouXianshuBeishu beishu = new ChayuanShuangkouXianshuBeishu();
 			// 赢家
-			WenzhouShuangkouPanPlayerResult yingPlayerResult = new WenzhouShuangkouPanPlayerResult();
+			ChayuanShuangkouPanPlayerResult yingPlayerResult = new ChayuanShuangkouPanPlayerResult();
 			yingPlayerResult.setPlayerId(yingPlayerId);
 			int[] xianshuCount = playerXianshuMap.get(yingPlayerId);
 			if (xianshuCount == null) {
@@ -107,7 +105,7 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			panPlayerResultList.add(yingPlayerResult);
 
 			// 玩家1
-			WenzhouShuangkouPanPlayerResult playerResult1 = new WenzhouShuangkouPanPlayerResult();
+			ChayuanShuangkouPanPlayerResult playerResult1 = new ChayuanShuangkouPanPlayerResult();
 			playerResult1.setPlayerId(playerId1);
 			int[] xianshuCount1 = playerXianshuMap.get(playerId1);
 			if (xianshuCount1 == null) {
@@ -151,7 +149,7 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			panPlayerResultList.add(playerResult1);
 
 			// 玩家2
-			WenzhouShuangkouPanPlayerResult playerResult2 = new WenzhouShuangkouPanPlayerResult();
+			ChayuanShuangkouPanPlayerResult playerResult2 = new ChayuanShuangkouPanPlayerResult();
 			playerResult2.setPlayerId(playerId2);
 			int[] xianshuCount2 = playerXianshuMap.get(playerId2);
 			if (xianshuCount2 == null) {
@@ -195,7 +193,7 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			panPlayerResultList.add(playerResult2);
 
 			// 玩家3
-			WenzhouShuangkouPanPlayerResult playerResult3 = new WenzhouShuangkouPanPlayerResult();
+			ChayuanShuangkouPanPlayerResult playerResult3 = new ChayuanShuangkouPanPlayerResult();
 			playerResult3.setPlayerId(playerId3);
 			int[] xianshuCount3 = playerXianshuMap.get(playerId3);
 			if (xianshuCount3 == null) {
@@ -246,10 +244,10 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 
 			// 两两结算贡献分
 			for (int i = 0; i < panPlayerResultList.size(); i++) {
-				WenzhouShuangkouPanPlayerResult playerResulti = panPlayerResultList.get(i);
+				ChayuanShuangkouPanPlayerResult playerResulti = panPlayerResultList.get(i);
 				ChayuanShuangkouGongxianFen gongxiani = playerResulti.getGongxianfen();
 				for (int j = (i + 1); j < panPlayerResultList.size(); j++) {
-					WenzhouShuangkouPanPlayerResult playerResultj = panPlayerResultList.get(j);
+					ChayuanShuangkouPanPlayerResult playerResultj = panPlayerResultList.get(j);
 					ChayuanShuangkouGongxianFen gongxianj = playerResultj.getGongxianfen();
 					// 结算贡献分
 					int feni = gongxiani.getValue();
@@ -259,48 +257,6 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 				}
 			}
 
-			// 计算补分
-			Set<String> yingjiaPlayerId = new HashSet<>();
-			for (int i = 0; i < panPlayerResultList.size(); i++) {
-				WenzhouShuangkouPanPlayerResult playerResulti = panPlayerResultList.get(i);
-				if (yingPlayerId.equals(playerResulti.getPlayerId())) {
-					ChayuanShuangkouChaixianbufen chaixianBufen1 = playerResulti.getBufen();
-					int bufeni = chaixianBufen1.getValue();
-					for (int j = 0; j < panPlayerResultList.size(); j++) {
-						WenzhouShuangkouPanPlayerResult playerResultj = panPlayerResultList.get(j);
-						if (duijiaPlayer.getId().equals(playerResultj.getPlayerId())) {
-							ChayuanShuangkouChaixianbufen chaixianBufen2 = playerResultj.getBufen();
-							int bufenj = chaixianBufen2.getValue();
-							// 结算补分
-							chaixianBufen1.jiesuan(-bufenj);
-							chaixianBufen2.jiesuan(-bufeni);
-							yingjiaPlayerId.add(yingPlayerId);
-							yingjiaPlayerId.add(duijiaPlayer.getId());
-							break;
-						}
-					}
-				}
-			}
-			for (int i = 0; i < panPlayerResultList.size(); i++) {
-				WenzhouShuangkouPanPlayerResult playerResulti = panPlayerResultList.get(i);
-				if (!yingjiaPlayerId.contains(playerResulti.getPlayerId())) {
-					ChayuanShuangkouChaixianbufen chaixianBufen1 = playerResulti.getBufen();
-					int bufeni = chaixianBufen1.getValue();
-					ShuangkouPlayer duijiaPlayer1 = currentPan.findDuijiaPlayer(playerResulti.getPlayerId());
-					for (int j = 0; j < panPlayerResultList.size(); j++) {
-						WenzhouShuangkouPanPlayerResult playerResultj = panPlayerResultList.get(j);
-						if (duijiaPlayer1.getId().equals(playerResultj.getPlayerId())) {
-							ChayuanShuangkouChaixianbufen chaixianBufen2 = playerResultj.getBufen();
-							int bufenj = chaixianBufen2.getValue();
-							// 结算补分
-							chaixianBufen1.jiesuan(-bufenj);
-							chaixianBufen2.jiesuan(-bufeni);
-							break;
-						}
-					}
-					break;
-				}
-			}
 			panPlayerResultList.forEach((playerResult) -> {
 				// 计算当盘总分
 				playerResult.setScore(playerResult.getGongxianfen().getTotalscore() + playerResult.getBufen().getValue()
@@ -313,18 +269,18 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 					playerResult.setTotalScore(playerResult.getScore());
 				}
 			});
-			WenzhouShuangkouPanResult wenzhouShuangkouPanResult = new WenzhouShuangkouPanResult();
-			wenzhouShuangkouPanResult.setPan(new PanValueObject(currentPan));
-			wenzhouShuangkouPanResult.setPanFinishTime(panFinishTime);
-			wenzhouShuangkouPanResult.setPanPlayerResultList(panPlayerResultList);
-			return wenzhouShuangkouPanResult;
+			ChayuanShuangkouPanResult chayuanShuangkouPanResult = new ChayuanShuangkouPanResult();
+			chayuanShuangkouPanResult.setPan(new PanValueObject(currentPan));
+			chayuanShuangkouPanResult.setPanFinishTime(panFinishTime);
+			chayuanShuangkouPanResult.setPanPlayerResultList(panPlayerResultList);
+			return chayuanShuangkouPanResult;
 		} else {
-			List<WenzhouShuangkouPanPlayerResult> panPlayerResultList = new ArrayList<>();
+			List<ChayuanShuangkouPanPlayerResult> panPlayerResultList = new ArrayList<>();
 			String yingPlayerId = noPaiPlayerIdList.get(0);
 			ShuangkouPlayer shuPlayer = currentPan.findDuijiaPlayer(yingPlayerId);
 			String shuPlayerId = shuPlayer.getId();
 			// 赢家
-			WenzhouShuangkouPanPlayerResult yingPlayerResult = new WenzhouShuangkouPanPlayerResult();
+			ChayuanShuangkouPanPlayerResult yingPlayerResult = new ChayuanShuangkouPanPlayerResult();
 			yingPlayerResult.setPlayerId(yingPlayerId);
 			ChayuanShuangkouMingcifen mingcifen = new ChayuanShuangkouMingcifen();
 			mingcifen.setMingci(1);
@@ -363,7 +319,7 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 			yingPlayerResult.setBufen(bufen);
 			panPlayerResultList.add(yingPlayerResult);
 			// 输家
-			WenzhouShuangkouPanPlayerResult shuPlayerResult = new WenzhouShuangkouPanPlayerResult();
+			ChayuanShuangkouPanPlayerResult shuPlayerResult = new ChayuanShuangkouPanPlayerResult();
 			shuPlayerResult.setPlayerId(shuPlayerId);
 			ChayuanShuangkouMingcifen mingcifen1 = new ChayuanShuangkouMingcifen();
 			mingcifen1.setMingci(2);
@@ -392,10 +348,10 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 
 			// 两两结算贡献分
 			for (int i = 0; i < panPlayerResultList.size(); i++) {
-				WenzhouShuangkouPanPlayerResult playerResult1 = panPlayerResultList.get(i);
+				ChayuanShuangkouPanPlayerResult playerResult1 = panPlayerResultList.get(i);
 				ChayuanShuangkouGongxianFen gongxian1 = playerResult1.getGongxianfen();
 				for (int j = (i + 1); j < panPlayerResultList.size(); j++) {
-					WenzhouShuangkouPanPlayerResult playerResult2 = panPlayerResultList.get(j);
+					ChayuanShuangkouPanPlayerResult playerResult2 = panPlayerResultList.get(j);
 					ChayuanShuangkouGongxianFen gongxian2 = playerResult2.getGongxianfen();
 					// 结算贡献分
 					int fen1 = gongxian1.getValue();
@@ -418,28 +374,28 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 					playerResult.setTotalScore(playerResult.getScore());
 				}
 			});
-			WenzhouShuangkouPanResult wenzhouShuangkouPanResult = new WenzhouShuangkouPanResult();
-			wenzhouShuangkouPanResult.setPan(new PanValueObject(currentPan));
-			wenzhouShuangkouPanResult.setPanFinishTime(panFinishTime);
-			wenzhouShuangkouPanResult.setPanPlayerResultList(panPlayerResultList);
-			return wenzhouShuangkouPanResult;
+			ChayuanShuangkouPanResult chayuanShuangkouPanResult = new ChayuanShuangkouPanResult();
+			chayuanShuangkouPanResult.setPan(new PanValueObject(currentPan));
+			chayuanShuangkouPanResult.setPanFinishTime(panFinishTime);
+			chayuanShuangkouPanResult.setPanPlayerResultList(panPlayerResultList);
+			return chayuanShuangkouPanResult;
 		}
 	}
 
 	public PanResult buildCurrentPanResultByChaodi(Ju ju, long panFinishTime) {
 		Pan currentPan = ju.getCurrentPan();
-		WenzhouShuangkouPanResult latestFinishedPanResult = (WenzhouShuangkouPanResult) ju
+		ChayuanShuangkouPanResult latestFinishedPanResult = (ChayuanShuangkouPanResult) ju
 				.findLatestFinishedPanResult();
 		Map<String, Integer> playerTotalScoreMap = new HashMap<>();
 		if (latestFinishedPanResult != null) {
-			for (WenzhouShuangkouPanPlayerResult panPlayerResult : latestFinishedPanResult.getPanPlayerResultList()) {
+			for (ChayuanShuangkouPanPlayerResult panPlayerResult : latestFinishedPanResult.getPanPlayerResultList()) {
 				playerTotalScoreMap.put(panPlayerResult.getPlayerId(), panPlayerResult.getTotalScore());
 			}
 		}
-		List<WenzhouShuangkouPanPlayerResult> panPlayerResultList = new ArrayList<>();
+		List<ChayuanShuangkouPanPlayerResult> panPlayerResultList = new ArrayList<>();
 		List<String> playerIdList = ju.getCurrentPan().findAllPlayerId();
 		playerIdList.forEach((playerId) -> {
-			WenzhouShuangkouPanPlayerResult playerResult = new WenzhouShuangkouPanPlayerResult();
+			ChayuanShuangkouPanPlayerResult playerResult = new ChayuanShuangkouPanPlayerResult();
 			playerResult.setPlayerId(playerId);
 			ChayuanShuangkouMingcifen mingcifen = new ChayuanShuangkouMingcifen();
 			playerResult.setMingcifen(mingcifen);
@@ -460,10 +416,10 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 
 		// 两两结算贡献分
 		for (int i = 0; i < panPlayerResultList.size(); i++) {
-			WenzhouShuangkouPanPlayerResult playerResult1 = panPlayerResultList.get(i);
+			ChayuanShuangkouPanPlayerResult playerResult1 = panPlayerResultList.get(i);
 			ChayuanShuangkouGongxianFen gongxian1 = playerResult1.getGongxianfen();
 			for (int j = (i + 1); j < panPlayerResultList.size(); j++) {
-				WenzhouShuangkouPanPlayerResult playerResult2 = panPlayerResultList.get(j);
+				ChayuanShuangkouPanPlayerResult playerResult2 = panPlayerResultList.get(j);
 				ChayuanShuangkouGongxianFen gongxian2 = playerResult2.getGongxianfen();
 				// 结算贡献分
 				int fen1 = gongxian1.getValue();
@@ -485,12 +441,12 @@ public class ChayuanShuangkouCurrentPanResultBuilder implements CurrentPanResult
 				playerResult.setTotalScore(playerResult.getScore());
 			}
 		});
-		WenzhouShuangkouPanResult wenzhouShuangkouPanResult = new WenzhouShuangkouPanResult();
-		wenzhouShuangkouPanResult.setChaodi(true);
-		wenzhouShuangkouPanResult.setPan(new PanValueObject(currentPan));
-		wenzhouShuangkouPanResult.setPanFinishTime(panFinishTime);
-		wenzhouShuangkouPanResult.setPanPlayerResultList(panPlayerResultList);
-		return wenzhouShuangkouPanResult;
+		ChayuanShuangkouPanResult chayuanShuangkouPanResult = new ChayuanShuangkouPanResult();
+		chayuanShuangkouPanResult.setChaodi(true);
+		chayuanShuangkouPanResult.setPan(new PanValueObject(currentPan));
+		chayuanShuangkouPanResult.setPanFinishTime(panFinishTime);
+		chayuanShuangkouPanResult.setPanPlayerResultList(panPlayerResultList);
+		return chayuanShuangkouPanResult;
 	}
 
 	public int getRenshu() {

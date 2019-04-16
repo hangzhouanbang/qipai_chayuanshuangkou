@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.dml.shuangkou.pan.PanResult;
 
-public class WenzhouShuangkouPanResult extends PanResult {
+public class ChayuanShuangkouPanResult extends PanResult {
 	private boolean chaodi;
-	private List<WenzhouShuangkouPanPlayerResult> panPlayerResultList;
+	private List<ChayuanShuangkouPanPlayerResult> panPlayerResultList;
 
 	public boolean isChaodi() {
 		return chaodi;
@@ -16,11 +16,11 @@ public class WenzhouShuangkouPanResult extends PanResult {
 		this.chaodi = chaodi;
 	}
 
-	public List<WenzhouShuangkouPanPlayerResult> getPanPlayerResultList() {
+	public List<ChayuanShuangkouPanPlayerResult> getPanPlayerResultList() {
 		return panPlayerResultList;
 	}
 
-	public void setPanPlayerResultList(List<WenzhouShuangkouPanPlayerResult> panPlayerResultList) {
+	public void setPanPlayerResultList(List<ChayuanShuangkouPanPlayerResult> panPlayerResultList) {
 		this.panPlayerResultList = panPlayerResultList;
 	}
 

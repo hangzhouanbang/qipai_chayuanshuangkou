@@ -3,7 +3,7 @@ package com.anbang.qipai.chayuanshuangkou.web.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouJuResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouJuResult;
 import com.anbang.qipai.chayuanshuangkou.cqrs.q.dbo.JuResultDbo;
 import com.anbang.qipai.chayuanshuangkou.cqrs.q.dbo.PukeGameDbo;
 
@@ -13,7 +13,7 @@ public class JuResultVO {
 	private String datuhaoId;
 	private int panshu;
 	private int finishedPanCount;
-	private List<WenzhouShuangkouJuPlayerResultVO> playerResultList;
+	private List<ChayuanShuangkouJuPlayerResultVO> playerResultList;
 
 	private PanResultVO lastPanResult;
 	private long finishTime;
@@ -24,7 +24,7 @@ public class JuResultVO {
 
 	public JuResultVO(JuResultDbo juResultDbo, PukeGameDbo pukeGameDbo) {
 		gameId = juResultDbo.getGameId();
-		WenzhouShuangkouJuResult juResult = juResultDbo.getJuResult();
+		ChayuanShuangkouJuResult juResult = juResultDbo.getJuResult();
 		dayingjiaId = juResult.getDayingjiaId();
 		datuhaoId = juResult.getDatuhaoId();
 		if (juResultDbo.getLastPanResult() != null) {
@@ -36,11 +36,11 @@ public class JuResultVO {
 		playerResultList = new ArrayList<>();
 		if (juResult.getPlayerResultList() != null) {
 			juResult.getPlayerResultList().forEach(
-					(juPlayerResult) -> playerResultList.add(new WenzhouShuangkouJuPlayerResultVO(juPlayerResult,
+					(juPlayerResult) -> playerResultList.add(new ChayuanShuangkouJuPlayerResultVO(juPlayerResult,
 							pukeGameDbo.findPlayer(juPlayerResult.getPlayerId()))));
 		} else {
 			pukeGameDbo.getPlayers().forEach((pukeGamePlayerDbo) -> playerResultList
-					.add(new WenzhouShuangkouJuPlayerResultVO(pukeGamePlayerDbo)));
+					.add(new ChayuanShuangkouJuPlayerResultVO(pukeGamePlayerDbo)));
 		}
 	}
 
@@ -84,11 +84,11 @@ public class JuResultVO {
 		this.finishedPanCount = finishedPanCount;
 	}
 
-	public List<WenzhouShuangkouJuPlayerResultVO> getPlayerResultList() {
+	public List<ChayuanShuangkouJuPlayerResultVO> getPlayerResultList() {
 		return playerResultList;
 	}
 
-	public void setPlayerResultList(List<WenzhouShuangkouJuPlayerResultVO> playerResultList) {
+	public void setPlayerResultList(List<ChayuanShuangkouJuPlayerResultVO> playerResultList) {
 		this.playerResultList = playerResultList;
 	}
 

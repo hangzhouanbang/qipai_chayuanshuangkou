@@ -1,35 +1,65 @@
-package com.anbang.qipai.chayuanshuangkou.msg.msjobj;
+package com.anbang.qipai.chayuanshuangkou.web.vo;
+
+import java.util.List;
 
 import com.anbang.qipai.chayuanshuangkou.cqrs.q.dbo.PukeGamePlayerDbo;
 import com.anbang.qipai.chayuanshuangkou.cqrs.q.dbo.WenzhouShuangkouPanPlayerResultDbo;
-import com.anbang.qipai.chayuanshuangkou.web.vo.WenzhouShuangkouMingcifenVO;
+import com.dml.shuangkou.player.ShuangkouPlayerValueObject;
 
-public class WenzhouShuangkouPanPlayerResultMO {
+public class ChayuanShuangkouPanPlayerResultVO {
 	private String playerId;
 	private String nickname;
 	private String headimgurl;
 	private boolean chaodi;
-	private WenzhouShuangkouMingcifenVO mingcifen;
+	private ShuangkouPlayerShoupaiVO allShoupai;
+	private ChayuanShuangkouMingcifenVO mingcifen;
 	private int xianshubeishu;
 	private int gongxianfen;
+	private int bufen;
 	private int score;// 一盘结算分
 	private int totalScore;// 总分
 
-	public WenzhouShuangkouPanPlayerResultMO() {
+	public ChayuanShuangkouPanPlayerResultVO() {
 
 	}
 
-	public WenzhouShuangkouPanPlayerResultMO(PukeGamePlayerDbo playerDbo,
+	public ChayuanShuangkouPanPlayerResultVO(PukeGamePlayerDbo playerDbo,
 			WenzhouShuangkouPanPlayerResultDbo panPlayerResult) {
 		playerId = playerDbo.getPlayerId();
 		nickname = playerDbo.getNickname();
 		headimgurl = playerDbo.getHeadimgurl();
 		chaodi = panPlayerResult.getPlayerResult().isChaodi();
-		mingcifen = new WenzhouShuangkouMingcifenVO(panPlayerResult.getPlayerResult().getMingcifen());
+		ShuangkouPlayerValueObject shuangkouPlayerValueObject = panPlayerResult.getPlayer();
+		List<List<Integer>> shoupaiIdListForSortList = shuangkouPlayerValueObject.getShoupaiIdListForSortList();
+		if (shoupaiIdListForSortList == null || shoupaiIdListForSortList.isEmpty()) {
+			allShoupai = new ShuangkouPlayerShoupaiVO(shuangkouPlayerValueObject.getAllShoupai(),
+					shuangkouPlayerValueObject.getTotalShoupai(), null);
+		} else {
+			allShoupai = new ShuangkouPlayerShoupaiVO(shuangkouPlayerValueObject.getAllShoupai(),
+					shuangkouPlayerValueObject.getTotalShoupai(), shoupaiIdListForSortList.get(0));
+		}
+		mingcifen = new ChayuanShuangkouMingcifenVO(panPlayerResult.getPlayerResult().getMingcifen());
 		xianshubeishu = panPlayerResult.getPlayerResult().getXianshubeishu();
 		gongxianfen = panPlayerResult.getPlayerResult().getGongxianfen().getTotalscore();
+		bufen = panPlayerResult.getPlayerResult().getBufen().getValue();
 		score = panPlayerResult.getPlayerResult().getScore();
 		totalScore = panPlayerResult.getPlayerResult().getTotalScore();
+	}
+
+	public ShuangkouPlayerShoupaiVO getAllShoupai() {
+		return allShoupai;
+	}
+
+	public void setAllShoupai(ShuangkouPlayerShoupaiVO allShoupai) {
+		this.allShoupai = allShoupai;
+	}
+
+	public int getBufen() {
+		return bufen;
+	}
+
+	public void setBufen(int bufen) {
+		this.bufen = bufen;
 	}
 
 	public String getPlayerId() {
@@ -64,11 +94,11 @@ public class WenzhouShuangkouPanPlayerResultMO {
 		this.chaodi = chaodi;
 	}
 
-	public WenzhouShuangkouMingcifenVO getMingcifen() {
+	public ChayuanShuangkouMingcifenVO getMingcifen() {
 		return mingcifen;
 	}
 
-	public void setMingcifen(WenzhouShuangkouMingcifenVO mingcifen) {
+	public void setMingcifen(ChayuanShuangkouMingcifenVO mingcifen) {
 		this.mingcifen = mingcifen;
 	}
 

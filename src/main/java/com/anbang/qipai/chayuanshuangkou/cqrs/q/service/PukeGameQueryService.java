@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.PukeGameValueObject;
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouJuResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouJuResult;
 import com.anbang.qipai.chayuanshuangkou.cqrs.q.dao.GameFinishVoteDboDao;
 import com.anbang.qipai.chayuanshuangkou.cqrs.q.dao.JuResultDboDao;
 import com.anbang.qipai.chayuanshuangkou.cqrs.q.dao.PukeGameDboDao;
@@ -77,8 +77,8 @@ public class PukeGameQueryService {
 		}
 
 		if (pukeGame.getJuResult() != null) {
-			WenzhouShuangkouJuResult wenzhouShuangkouJuResult = (WenzhouShuangkouJuResult) pukeGame.getJuResult();
-			JuResultDbo juResultDbo = new JuResultDbo(pukeGame.getId(), null, wenzhouShuangkouJuResult);
+			ChayuanShuangkouJuResult chayuanShuangkouJuResult = (ChayuanShuangkouJuResult) pukeGame.getJuResult();
+			JuResultDbo juResultDbo = new JuResultDbo(pukeGame.getId(), null, chayuanShuangkouJuResult);
 			juResultDboDao.save(juResultDbo);
 		}
 	}
@@ -100,9 +100,9 @@ public class PukeGameQueryService {
 		pukeGameDboDao.save(pukeGameDbo);
 
 		if (pukeGameValueObject.getJuResult() != null) {
-			WenzhouShuangkouJuResult wenzhouShuangkouJuResult = (WenzhouShuangkouJuResult) pukeGameValueObject
+			ChayuanShuangkouJuResult chayuanShuangkouJuResult = (ChayuanShuangkouJuResult) pukeGameValueObject
 					.getJuResult();
-			JuResultDbo juResultDbo = new JuResultDbo(pukeGameValueObject.getId(), null, wenzhouShuangkouJuResult);
+			JuResultDbo juResultDbo = new JuResultDbo(pukeGameValueObject.getId(), null, chayuanShuangkouJuResult);
 			juResultDboDao.save(juResultDbo);
 		}
 	}
@@ -123,9 +123,9 @@ public class PukeGameQueryService {
 		pukeGameDboDao.save(pukeGameDbo);
 
 		if (pukeGameValueObject.getJuResult() != null) {
-			WenzhouShuangkouJuResult wenzhouShuangkouJuResult = (WenzhouShuangkouJuResult) pukeGameValueObject
+			ChayuanShuangkouJuResult chayuanShuangkouJuResult = (ChayuanShuangkouJuResult) pukeGameValueObject
 					.getJuResult();
-			JuResultDbo juResultDbo = new JuResultDbo(pukeGameValueObject.getId(), null, wenzhouShuangkouJuResult);
+			JuResultDbo juResultDbo = new JuResultDbo(pukeGameValueObject.getId(), null, chayuanShuangkouJuResult);
 			juResultDboDao.save(juResultDbo);
 		}
 	}
@@ -143,9 +143,9 @@ public class PukeGameQueryService {
 		pukeGameDboDao.save(pukeGameDbo);
 
 		if (pukeGameValueObject.getJuResult() != null) {
-			WenzhouShuangkouJuResult wenzhouShuangkouJuResult = (WenzhouShuangkouJuResult) pukeGameValueObject
+			ChayuanShuangkouJuResult chayuanShuangkouJuResult = (ChayuanShuangkouJuResult) pukeGameValueObject
 					.getJuResult();
-			JuResultDbo juResultDbo = new JuResultDbo(pukeGameValueObject.getId(), null, wenzhouShuangkouJuResult);
+			JuResultDbo juResultDbo = new JuResultDbo(pukeGameValueObject.getId(), null, chayuanShuangkouJuResult);
 			juResultDboDao.save(juResultDbo);
 		}
 	}

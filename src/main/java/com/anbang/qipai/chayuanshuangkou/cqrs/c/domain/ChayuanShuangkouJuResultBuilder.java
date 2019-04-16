@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouJuPlayerResult;
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouJuResult;
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouPanPlayerResult;
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouPanResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouJuPlayerResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouJuResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouPanPlayerResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouPanResult;
 import com.dml.shuangkou.ju.Ju;
 import com.dml.shuangkou.ju.JuResult;
 import com.dml.shuangkou.ju.JuResultBuilder;
@@ -17,18 +17,18 @@ public class ChayuanShuangkouJuResultBuilder implements JuResultBuilder {
 
 	@Override
 	public JuResult buildJuResult(Ju ju) {
-		WenzhouShuangkouJuResult wenzhouShuangkouJuResult = new WenzhouShuangkouJuResult();
+		ChayuanShuangkouJuResult wenzhouShuangkouJuResult = new ChayuanShuangkouJuResult();
 		wenzhouShuangkouJuResult.setFinishedPanCount(ju.countFinishedPan());
 		if (ju.countFinishedPan() > 0) {
-			Map<String, WenzhouShuangkouJuPlayerResult> juPlayerResultMap = new HashMap<>();
+			Map<String, ChayuanShuangkouJuPlayerResult> juPlayerResultMap = new HashMap<>();
 			for (PanResult panResult : ju.getFinishedPanResultList()) {
-				WenzhouShuangkouPanResult wenzhouShuangkouPanResult = (WenzhouShuangkouPanResult) panResult;
-				for (WenzhouShuangkouPanPlayerResult panPlayerResult : wenzhouShuangkouPanResult
+				ChayuanShuangkouPanResult wenzhouShuangkouPanResult = (ChayuanShuangkouPanResult) panResult;
+				for (ChayuanShuangkouPanPlayerResult panPlayerResult : wenzhouShuangkouPanResult
 						.getPanPlayerResultList()) {
-					WenzhouShuangkouJuPlayerResult juPlayerResult = juPlayerResultMap
+					ChayuanShuangkouJuPlayerResult juPlayerResult = juPlayerResultMap
 							.get(panPlayerResult.getPlayerId());
 					if (juPlayerResult == null) {
-						juPlayerResult = new WenzhouShuangkouJuPlayerResult();
+						juPlayerResult = new ChayuanShuangkouJuPlayerResult();
 						juPlayerResult.setPlayerId(panPlayerResult.getPlayerId());
 						juPlayerResultMap.put(panPlayerResult.getPlayerId(), juPlayerResult);
 					}
@@ -47,9 +47,9 @@ public class ChayuanShuangkouJuResultBuilder implements JuResultBuilder {
 				}
 			}
 
-			WenzhouShuangkouJuPlayerResult dayingjia = null;
-			WenzhouShuangkouJuPlayerResult datuhao = null;
-			for (WenzhouShuangkouJuPlayerResult juPlayerResult : juPlayerResultMap.values()) {
+			ChayuanShuangkouJuPlayerResult dayingjia = null;
+			ChayuanShuangkouJuPlayerResult datuhao = null;
+			for (ChayuanShuangkouJuPlayerResult juPlayerResult : juPlayerResultMap.values()) {
 				if (dayingjia == null) {
 					dayingjia = juPlayerResult;
 				} else {

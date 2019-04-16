@@ -6,8 +6,8 @@ import com.dml.shuangkou.pan.PanActionFrame;
 public class ChaodiResult {
 	private PukeGameValueObject pukeGame;
 	private PanActionFrame panActionFrame;
-	private WenzhouShuangkouPanResult panResult;
-	private WenzhouShuangkouJuResult juResult;
+	private ChayuanShuangkouPanResult panResult;
+	private ChayuanShuangkouJuResult juResult;
 
 	public PukeGameValueObject getPukeGame() {
 		return pukeGame;
@@ -25,19 +25,19 @@ public class ChaodiResult {
 		this.panActionFrame = panActionFrame;
 	}
 
-	public WenzhouShuangkouPanResult getPanResult() {
+	public ChayuanShuangkouPanResult getPanResult() {
 		return panResult;
 	}
 
-	public void setPanResult(WenzhouShuangkouPanResult panResult) {
+	public void setPanResult(ChayuanShuangkouPanResult panResult) {
 		this.panResult = panResult;
 	}
 
-	public WenzhouShuangkouJuResult getJuResult() {
+	public ChayuanShuangkouJuResult getJuResult() {
 		return juResult;
 	}
 
-	public void setJuResult(WenzhouShuangkouJuResult juResult) {
+	public void setJuResult(ChayuanShuangkouJuResult juResult) {
 		this.juResult = juResult;
 	}
 

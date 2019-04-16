@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.dml.shuangkou.ju.JuResult;
 
-public class WenzhouShuangkouJuResult implements JuResult {
+public class ChayuanShuangkouJuResult implements JuResult {
 	private int finishedPanCount;
 
-	private List<WenzhouShuangkouJuPlayerResult> playerResultList;
+	private List<ChayuanShuangkouJuPlayerResult> playerResultList;
 
 	private String dayingjiaId;
 
@@ -21,11 +21,11 @@ public class WenzhouShuangkouJuResult implements JuResult {
 		this.finishedPanCount = finishedPanCount;
 	}
 
-	public List<WenzhouShuangkouJuPlayerResult> getPlayerResultList() {
+	public List<ChayuanShuangkouJuPlayerResult> getPlayerResultList() {
 		return playerResultList;
 	}
 
-	public void setPlayerResultList(List<WenzhouShuangkouJuPlayerResult> playerResultList) {
+	public void setPlayerResultList(List<ChayuanShuangkouJuPlayerResult> playerResultList) {
 		this.playerResultList = playerResultList;
 	}
 

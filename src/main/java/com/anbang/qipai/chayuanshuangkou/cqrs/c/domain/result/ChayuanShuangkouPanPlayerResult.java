@@ -4,7 +4,7 @@ import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.ChayuanShuangkouChaixianb
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.ChayuanShuangkouGongxianFen;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.ChayuanShuangkouMingcifen;
 
-public class WenzhouShuangkouPanPlayerResult {
+public class ChayuanShuangkouPanPlayerResult {
 	private String playerId;
 	private boolean chaodi;
 	private ChayuanShuangkouMingcifen mingcifen;

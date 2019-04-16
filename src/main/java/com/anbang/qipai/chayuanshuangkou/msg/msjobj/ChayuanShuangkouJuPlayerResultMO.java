@@ -1,9 +1,9 @@
-package com.anbang.qipai.chayuanshuangkou.web.vo;
+package com.anbang.qipai.chayuanshuangkou.msg.msjobj;
 
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouJuPlayerResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouJuPlayerResult;
 import com.anbang.qipai.chayuanshuangkou.cqrs.q.dbo.PukeGamePlayerDbo;
 
-public class WenzhouShuangkouJuPlayerResultVO {
+public class ChayuanShuangkouJuPlayerResultMO {
 	private String playerId;
 	private String nickname;
 	private String headimgurl;
@@ -13,7 +13,7 @@ public class WenzhouShuangkouJuPlayerResultVO {
 	private int maxXianshu;
 	private int totalScore;
 
-	public WenzhouShuangkouJuPlayerResultVO(PukeGamePlayerDbo playerDbo) {
+	public ChayuanShuangkouJuPlayerResultMO(PukeGamePlayerDbo playerDbo) {
 		playerId = playerDbo.getPlayerId();
 		nickname = playerDbo.getNickname();
 		headimgurl = playerDbo.getHeadimgurl();
@@ -24,7 +24,7 @@ public class WenzhouShuangkouJuPlayerResultVO {
 		totalScore = 0;
 	}
 
-	public WenzhouShuangkouJuPlayerResultVO(WenzhouShuangkouJuPlayerResult juPlayerResult,
+	public ChayuanShuangkouJuPlayerResultMO(ChayuanShuangkouJuPlayerResult juPlayerResult,
 			PukeGamePlayerDbo playerDbo) {
 		playerId = playerDbo.getPlayerId();
 		nickname = playerDbo.getNickname();
@@ -99,4 +99,5 @@ public class WenzhouShuangkouJuPlayerResultVO {
 	public void setTotalScore(int totalScore) {
 		this.totalScore = totalScore;
 	}
+
 }

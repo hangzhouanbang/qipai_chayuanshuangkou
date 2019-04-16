@@ -1,12 +1,12 @@
 package com.anbang.qipai.chayuanshuangkou.cqrs.q.dbo;
 
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouPanPlayerResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouPanPlayerResult;
 import com.dml.shuangkou.player.ShuangkouPlayerValueObject;
 
 public class WenzhouShuangkouPanPlayerResultDbo {
 
 	private String playerId;
-	private WenzhouShuangkouPanPlayerResult playerResult;
+	private ChayuanShuangkouPanPlayerResult playerResult;
 	private ShuangkouPlayerValueObject player;
 
 	public String getPlayerId() {
@@ -17,11 +17,11 @@ public class WenzhouShuangkouPanPlayerResultDbo {
 		this.playerId = playerId;
 	}
 
-	public WenzhouShuangkouPanPlayerResult getPlayerResult() {
+	public ChayuanShuangkouPanPlayerResult getPlayerResult() {
 		return playerResult;
 	}
 
-	public void setPlayerResult(WenzhouShuangkouPanPlayerResult playerResult) {
+	public void setPlayerResult(ChayuanShuangkouPanPlayerResult playerResult) {
 		this.playerResult = playerResult;
 	}
 

@@ -2,7 +2,7 @@ package com.anbang.qipai.chayuanshuangkou.web.vo;
 
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.ChayuanShuangkouMingcifen;
 
-public class WenzhouShuangkouMingcifenVO {
+public class ChayuanShuangkouMingcifenVO {
 	private int mingci;
 	private boolean ying;
 	private boolean shuangkou;
@@ -10,11 +10,11 @@ public class WenzhouShuangkouMingcifenVO {
 	private boolean pingkou;
 	private int value;
 
-	public WenzhouShuangkouMingcifenVO() {
+	public ChayuanShuangkouMingcifenVO() {
 
 	}
 
-	public WenzhouShuangkouMingcifenVO(ChayuanShuangkouMingcifen mingcifen) {
+	public ChayuanShuangkouMingcifenVO(ChayuanShuangkouMingcifen mingcifen) {
 		mingci = mingcifen.getMingci();
 		ying = mingcifen.isYing();
 		if (mingcifen.isShuangkou()) {

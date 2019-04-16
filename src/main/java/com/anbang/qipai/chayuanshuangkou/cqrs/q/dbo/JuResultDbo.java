@@ -1,19 +1,19 @@
 package com.anbang.qipai.chayuanshuangkou.cqrs.q.dbo;
 
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouJuResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouJuResult;
 
 public class JuResultDbo {
 
 	private String id;
 	private String gameId;
 	private PanResultDbo lastPanResult;
-	private WenzhouShuangkouJuResult juResult;
+	private ChayuanShuangkouJuResult juResult;
 	private long finishTime;
 
 	public JuResultDbo() {
 	}
 
-	public JuResultDbo(String gameId, PanResultDbo lastPanResult, WenzhouShuangkouJuResult juResult) {
+	public JuResultDbo(String gameId, PanResultDbo lastPanResult, ChayuanShuangkouJuResult juResult) {
 		this.gameId = gameId;
 		this.lastPanResult = lastPanResult;
 		this.juResult = juResult;
@@ -44,11 +44,11 @@ public class JuResultDbo {
 		this.lastPanResult = lastPanResult;
 	}
 
-	public WenzhouShuangkouJuResult getJuResult() {
+	public ChayuanShuangkouJuResult getJuResult() {
 		return juResult;
 	}
 
-	public void setJuResult(WenzhouShuangkouJuResult juResult) {
+	public void setJuResult(ChayuanShuangkouJuResult juResult) {
 		this.juResult = juResult;
 	}
 

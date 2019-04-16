@@ -9,10 +9,10 @@ import java.util.Set;
 
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.listener.XianshuCountDaActionStatisticsListener;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChaodiResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouJuResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouPanPlayerResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouPanResult;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.PukeActionResult;
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouJuResult;
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouPanPlayerResult;
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouPanResult;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.state.PlayerAfterChaodi;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.state.PlayerChaodi;
 import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.state.PlayerVotedWhenAfterChaodi;
@@ -117,9 +117,9 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		chaodiResult.setPanActionFrame(firstPanActionFrame);
 
 		if (finish) {// 抄底成功
-			ChayuanShuangkouCurrentPanResultBuilder wenzhouShuangkouCurrentPanResultBuilder = (ChayuanShuangkouCurrentPanResultBuilder) ju
+			ChayuanShuangkouCurrentPanResultBuilder chayuanShuangkouCurrentPanResultBuilder = (ChayuanShuangkouCurrentPanResultBuilder) ju
 					.getCurrentPanResultBuilder();
-			PanResult panResult = wenzhouShuangkouCurrentPanResultBuilder.buildCurrentPanResultByChaodi(ju, actionTime);
+			PanResult panResult = chayuanShuangkouCurrentPanResultBuilder.buildCurrentPanResultByChaodi(ju, actionTime);
 			ju.getFinishedPanResultList().add(panResult);
 			ju.setCurrentPan(null);
 			if (ju.getJuFinishiDeterminer().determineToFinishJu(ju)) {// 是否局结束
@@ -128,16 +128,16 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 			checkAndFinishPan();
 
 			if (state.name().equals(WaitingNextPan.name) || state.name().equals(Finished.name)) {// 盘结束了
-				WenzhouShuangkouPanResult wenzhouShuangkouPanResult = (WenzhouShuangkouPanResult) ju
+				ChayuanShuangkouPanResult chayaunShuangkouPanResult = (ChayuanShuangkouPanResult) ju
 						.findLatestFinishedPanResult();
-				for (WenzhouShuangkouPanPlayerResult wenzhouShuangkouPanPlayerResult : wenzhouShuangkouPanResult
+				for (ChayuanShuangkouPanPlayerResult chayuanShuangkouPanPlayerResult : chayaunShuangkouPanResult
 						.getPanPlayerResultList()) {
-					playerTotalScoreMap.put(wenzhouShuangkouPanPlayerResult.getPlayerId(),
-							wenzhouShuangkouPanPlayerResult.getTotalScore());
+					playerTotalScoreMap.put(chayuanShuangkouPanPlayerResult.getPlayerId(),
+							chayuanShuangkouPanPlayerResult.getTotalScore());
 				}
-				chaodiResult.setPanResult(wenzhouShuangkouPanResult);
+				chaodiResult.setPanResult(chayaunShuangkouPanResult);
 				if (state.name().equals(Finished.name)) {// 局结束了
-					chaodiResult.setJuResult((WenzhouShuangkouJuResult) ju.getJuResult());
+					chaodiResult.setJuResult((ChayuanShuangkouJuResult) ju.getJuResult());
 				}
 			}
 			chaodiResult.setPukeGame(new PukeGameValueObject(this));
@@ -333,16 +333,16 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		LianXuDianShuZuComparator lianXuDianShuZuComparator = new TongDengLianXuDianShuZuComparator();
 		ZhadanComparator zhadanComparator = new ChayuanShuangkouZhadanComparator();
 
-		ChayuanShuangkouYaPaiSolutionsTipsFilter wenzhouShuangkouYaPaiSolutionsTipsFilter = new ChayuanShuangkouYaPaiSolutionsTipsFilter();
-		wenzhouShuangkouYaPaiSolutionsTipsFilter.setZhadanComparator(zhadanComparator);
-		wenzhouShuangkouYaPaiSolutionsTipsFilter.setBx(bx);
-		ju.setYaPaiSolutionsTipsFilter(wenzhouShuangkouYaPaiSolutionsTipsFilter);
+		ChayuanShuangkouYaPaiSolutionsTipsFilter chayuanShuangkouYaPaiSolutionsTipsFilter = new ChayuanShuangkouYaPaiSolutionsTipsFilter();
+		chayuanShuangkouYaPaiSolutionsTipsFilter.setZhadanComparator(zhadanComparator);
+		chayuanShuangkouYaPaiSolutionsTipsFilter.setBx(bx);
+		ju.setYaPaiSolutionsTipsFilter(chayuanShuangkouYaPaiSolutionsTipsFilter);
 
-		ChayuanShuangkouAllKedaPaiSolutionsGenerator wenzhouShuangkouAllKedaPaiSolutionsGenerator = new ChayuanShuangkouAllKedaPaiSolutionsGenerator();
-		wenzhouShuangkouAllKedaPaiSolutionsGenerator.setBx(bx);
-		wenzhouShuangkouAllKedaPaiSolutionsGenerator.setLianXuDianShuZuComparator(lianXuDianShuZuComparator);
-		wenzhouShuangkouAllKedaPaiSolutionsGenerator.setZhadanComparator(zhadanComparator);
-		ju.setAllKedaPaiSolutionsGenerator(wenzhouShuangkouAllKedaPaiSolutionsGenerator);
+		ChayuanShuangkouAllKedaPaiSolutionsGenerator chayuanShuangkouAllKedaPaiSolutionsGenerator = new ChayuanShuangkouAllKedaPaiSolutionsGenerator();
+		chayuanShuangkouAllKedaPaiSolutionsGenerator.setBx(bx);
+		chayuanShuangkouAllKedaPaiSolutionsGenerator.setLianXuDianShuZuComparator(lianXuDianShuZuComparator);
+		chayuanShuangkouAllKedaPaiSolutionsGenerator.setZhadanComparator(zhadanComparator);
+		ju.setAllKedaPaiSolutionsGenerator(chayuanShuangkouAllKedaPaiSolutionsGenerator);
 
 		ju.setWaihaoGenerator(new ShuangkouWaihaoGenerator());
 
@@ -381,9 +381,9 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		PukeActionResult result = new PukeActionResult();
 		result.setPanActionFrame(panActionFrame);
 		// 记录贡献分
-		XianshuCountDaActionStatisticsListener wenzhouShuangkouListener = ju.getActionStatisticsListenerManager()
+		XianshuCountDaActionStatisticsListener chayuanShuangkouListener = ju.getActionStatisticsListenerManager()
 				.findDaListener(XianshuCountDaActionStatisticsListener.class);
-		Map<String, int[]> playerXianshuMap = wenzhouShuangkouListener.getPlayerXianshuMap();
+		Map<String, int[]> playerXianshuMap = chayuanShuangkouListener.getPlayerXianshuMap();
 		Map<String, ChayuanShuangkouXianshuBeishu> maxXianshuMap = new HashMap<>();
 		Map<String, ChayuanShuangkouGongxianFen> gongxianfenMap = new HashMap<>();
 		List<ChayuanShuangkouGongxianFen> panPlayerGongxianfenList = new ArrayList<>();
@@ -428,15 +428,15 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		checkAndFinishPan();
 
 		if (state.name().equals(WaitingNextPan.name) || state.name().equals(Finished.name)) {// 盘结束了
-			WenzhouShuangkouPanResult panResult = (WenzhouShuangkouPanResult) ju.findLatestFinishedPanResult();
-			for (WenzhouShuangkouPanPlayerResult wenzhouShuangkouPanPlayerResult : panResult.getPanPlayerResultList()) {
-				playerTotalScoreMap.put(wenzhouShuangkouPanPlayerResult.getPlayerId(),
-						wenzhouShuangkouPanPlayerResult.getTotalScore());
+			ChayuanShuangkouPanResult panResult = (ChayuanShuangkouPanResult) ju.findLatestFinishedPanResult();
+			for (ChayuanShuangkouPanPlayerResult chayuanShuangkouPanPlayerResult : panResult.getPanPlayerResultList()) {
+				playerTotalScoreMap.put(chayuanShuangkouPanPlayerResult.getPlayerId(),
+						chayuanShuangkouPanPlayerResult.getTotalScore());
 			}
 
 			result.setPanResult(panResult);
 			if (state.name().equals(Finished.name)) {// 局结束了
-				result.setJuResult((WenzhouShuangkouJuResult) ju.getJuResult());
+				result.setJuResult((ChayuanShuangkouJuResult) ju.getJuResult());
 			}
 		} else {
 			// 计算胜负分
@@ -538,10 +538,10 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 			}
 		}
 		if (hasChaodi) {// 能够抄底
-			ChayuanShuangkouCurrentPanResultBuilder wenzhouShuangkouCurrentPanResultBuilder = (ChayuanShuangkouCurrentPanResultBuilder) ju
+			ChayuanShuangkouCurrentPanResultBuilder chayuanShuangkouCurrentPanResultBuilder = (ChayuanShuangkouCurrentPanResultBuilder) ju
 					.getCurrentPanResultBuilder();
 			List<String> chaodiPlayerIds = new ArrayList<>(chaodiPlayerIdList);
-			wenzhouShuangkouCurrentPanResultBuilder.setChaodiPlayerIdList(chaodiPlayerIds);
+			chayuanShuangkouCurrentPanResultBuilder.setChaodiPlayerIdList(chaodiPlayerIds);
 			allPlayerIds().forEach((pid) -> {
 				if (cannotChaodiSet.contains(pid)) {
 					playerChaodiStateMap.put(pid, PukeGamePlayerChaodiState.cannotchaodi);
@@ -717,14 +717,6 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 		this.sxfd = sxfd;
 	}
 
-	public ChaPai getChapai() {
-		return chapai;
-	}
-
-	public void setChapai(ChaPai chapai) {
-		this.chapai = chapai;
-	}
-
 	public FaPai getFapai() {
 		return fapai;
 	}
@@ -811,6 +803,14 @@ public class PukeGame extends FixedPlayersMultipanAndVotetofinishGame {
 
 	public void setPlayerGongxianfenDetalMap(Map<String, Integer> playerGongxianfenDetalMap) {
 		this.playerGongxianfenDetalMap = playerGongxianfenDetalMap;
+	}
+
+	public ChaPai getChapai() {
+		return chapai;
+	}
+
+	public void setChapai(ChaPai chapai) {
+		this.chapai = chapai;
 	}
 
 }

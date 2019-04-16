@@ -3,8 +3,8 @@ package com.anbang.qipai.chayuanshuangkou.cqrs.q.dbo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouPanPlayerResult;
-import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.WenzhouShuangkouPanResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouPanPlayerResult;
+import com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result.ChayuanShuangkouPanResult;
 import com.dml.shuangkou.pan.PanActionFrame;
 
 public class PanResultDbo {
@@ -20,12 +20,12 @@ public class PanResultDbo {
 	public PanResultDbo() {
 	}
 
-	public PanResultDbo(String gameId, WenzhouShuangkouPanResult panResult) {
+	public PanResultDbo(String gameId, ChayuanShuangkouPanResult panResult) {
 		this.gameId = gameId;
 		panNo = panResult.getPan().getNo();
 		this.chaodi = panResult.isChaodi();
 		playerResultList = new ArrayList<>();
-		for (WenzhouShuangkouPanPlayerResult playerResult : panResult.getPanPlayerResultList()) {
+		for (ChayuanShuangkouPanPlayerResult playerResult : panResult.getPanPlayerResultList()) {
 			WenzhouShuangkouPanPlayerResultDbo dbo = new WenzhouShuangkouPanPlayerResultDbo();
 			dbo.setPlayerId(playerResult.getPlayerId());
 			dbo.setPlayerResult(playerResult);

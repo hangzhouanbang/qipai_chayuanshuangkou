@@ -64,8 +64,8 @@ public class CaseTest {
 	// 普通压牌
 	public static void main(String[] args) {
 		long s1 = System.currentTimeMillis();
-		DianShuZu beiYaDianShuZu = new DanzhangDianShuZu(DianShu.jiu);
-		int[] dianShuAmountArray = { 0, 3, 4, 1, 2, 0, 3, 0, 6, 0, 0, 2, 0, 0, 2 };
+		DianShuZu beiYaDianShuZu = new DanzhangDianShuZu(DianShu.shi);
+		int[] dianShuAmountArray = { 0, 0, 0, 1, 6, 0, 0, 0, 3, 4, 5, 5, 0, 0, 2 };
 		List<DaPaiDianShuSolution> solutionList = new ArrayList<>(
 				calculate(beiYaDianShuZu, dianShuAmountArray.clone()).values());
 		solutionList.addAll(calculateForZhadan(beiYaDianShuZu, dianShuAmountArray.clone()).values());
@@ -1516,6 +1516,9 @@ public class CaseTest {
 					// 连续炸弹
 					paiXing.setLianXuZhadanDianShuZuList(
 							DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray));
+					// 两连连续炸弹
+					paiXing.getLianXuZhadanDianShuZuList()
+							.addAll(generateLiangLianXuZhadanDianShuZu(dianshuCountArray));
 					paiXing = paiXingFilterForZhadan(paiXing, beiYaDianShuZu);
 					solutionSet.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithWangDang(paiXing,
 							wangDangPaiArray, dianshuCountArray, bx));
@@ -1528,6 +1531,33 @@ public class CaseTest {
 		}
 	}
 
+	/**
+	 * 两连并大于8线
+	 */
+	private static List<LianXuZhadanDianShuZu> generateLiangLianXuZhadanDianShuZu(int[] dianShuAmountArray) {
+		List<LianXuZhadanDianShuZu> lianXuZhadanList = new ArrayList<>();
+		for (int i = 0; i < dianShuAmountArray.length; i++) {
+			int[] dianshuZhangshuArray = new int[8];// 每种点数可能有多少张牌，最多8连
+			int lianXuZhadanLianXuCount = 0;
+			int j = i;
+			while (j < 19 && dianShuAmountArray[j % 13] >= 6) {// 任意6张或者6张以上点数相连的牌，3起最小，到2
+				lianXuZhadanLianXuCount++;
+				j++;
+			}
+			if (lianXuZhadanLianXuCount == 2) {
+				DianShu[] lianXuDianShuArray = new DianShu[lianXuZhadanLianXuCount];
+				for (int k = 0; k < lianXuZhadanLianXuCount; k++) {
+					dianshuZhangshuArray[k] = dianShuAmountArray[(i + k) % 13];
+					lianXuDianShuArray[k] = DianShu.getDianShuByOrdinal((i + k) % 13);
+				}
+				LianXuZhadanDianShuZu lianXuZhadan = new LianXuZhadanDianShuZu(lianXuDianShuArray,
+						dianshuZhangshuArray.clone());
+				lianXuZhadanList.add(lianXuZhadan);
+			}
+		}
+		return lianXuZhadanList;
+	}
+
 	private static void calculateDaPaiDianShuSolutionWithoutWangDangForZhadan(int[] dianshuCountArray,
 			DianShuZu beiYaDianShuZu, Set<DaPaiDianShuSolution> solutionSet) {
 		PaiXing paiXing = new PaiXing();
@@ -1535,6 +1565,8 @@ public class CaseTest {
 		paiXing.setDanGeZhadanDianShuZuList(DianShuZuCalculator.calculateDanGeZhadanDianShuZu(dianshuCountArray));
 		// 连续炸弹
 		paiXing.setLianXuZhadanDianShuZuList(DianShuZuCalculator.calculateLianXuZhadanDianShuZu(dianshuCountArray));
+		// 两连连续炸弹
+		paiXing.getLianXuZhadanDianShuZuList().addAll(generateLiangLianXuZhadanDianShuZu(dianshuCountArray));
 		paiXing = paiXingFilterForZhadan(paiXing, beiYaDianShuZu);
 		solutionSet.addAll(DianShuZuCalculator.calculateAllDaPaiDianShuSolutionWithoutWangDang(paiXing));
 	}

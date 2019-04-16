@@ -1,6 +1,6 @@
 package com.anbang.qipai.chayuanshuangkou.cqrs.c.domain.result;
 
-public class WenzhouShuangkouJuPlayerResult {
+public class ChayuanShuangkouJuPlayerResult {
 	private String playerId;
 	private int shuangkouCount;
 	private int dankouCount;

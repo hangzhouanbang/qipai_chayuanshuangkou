@@ -15,7 +15,7 @@ public class PukeHistoricalPanResult {
 
 	private long finishTime;
 
-	private List<WenzhouShuangkouPanPlayerResultMO> playerResultList;
+	private List<ChayuanShuangkouPanPlayerResultMO> playerResultList;
 
 	public PukeHistoricalPanResult() {
 
@@ -25,7 +25,7 @@ public class PukeHistoricalPanResult {
 		List<WenzhouShuangkouPanPlayerResultDbo> list = panResultDbo.getPlayerResultList();
 		if (list != null) {
 			playerResultList = new ArrayList<>(list.size());
-			list.forEach((panPlayerResult) -> playerResultList.add(new WenzhouShuangkouPanPlayerResultMO(
+			list.forEach((panPlayerResult) -> playerResultList.add(new ChayuanShuangkouPanPlayerResultMO(
 					pukeGameDbo.findPlayer(panPlayerResult.getPlayerId()), panPlayerResult)));
 		}
 		gameId = pukeGameDbo.getId();
@@ -57,11 +57,11 @@ public class PukeHistoricalPanResult {
 		this.finishTime = finishTime;
 	}
 
-	public List<WenzhouShuangkouPanPlayerResultMO> getPlayerResultList() {
+	public List<ChayuanShuangkouPanPlayerResultMO> getPlayerResultList() {
 		return playerResultList;
 	}
 
-	public void setPlayerResultList(List<WenzhouShuangkouPanPlayerResultMO> playerResultList) {
+	public void setPlayerResultList(List<ChayuanShuangkouPanPlayerResultMO> playerResultList) {
 		this.playerResultList = playerResultList;
 	}
 }
